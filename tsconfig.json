@@ -7,6 +7,19 @@
         "rootDir": "./src",
         "target": "es6",
         "skipLibCheck": true,
-        "strict": true
-    }
+        "strict": true,
+		"baseUrl": ".",
+		"paths": {
+			"*": [ "./src/*" ],
+			"API/Routes": [ "./src/routes", "./src/routes/*" ],
+			"API/Models": [ "./src/models", "./src/models/*" ],
+			"API/Utils/*": [ "./src/utils/*" ],
+			"API/Middleware": [ "./src/middleware", "./src/middleware/*" ],
+			"API/Interfaces": [ "./src/interfaces", "./src/interfaces/*" ]
+		},
+		"strictPropertyInitialization": false
+    },
+	"exclude": [
+		"node_modules"
+	]
 }

@@ -1,17 +1,9 @@
 import * as mongoose from "mongoose";
-require("dotenv").config();
 
-const mongoString = process.env.DATABASE_URL;
-
-export function connectToDatabase() {
-	mongoose.connect(mongoString ?? "");
-	const databsase = mongoose.connection;
-
-	databsase.on("error", error => {
-		console.log(error);
-	});
-
-	databsase.on("connected", error => {
-		console.log("Database Connected");
+export function connectToDatabase(mongoString: string) {
+	return new Promise((resolve, reject) => {
+		mongoose.connect(mongoString)
+			.then(resolve)
+			.catch(reject);
 	});
 }

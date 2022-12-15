@@ -1,13 +1,13 @@
 import express, { Express } from "express";
-import userModel from "../models/User";
+import { userModel } from "../models";
 import { v4 as uuidv4 } from "uuid";
 import bcrypt from "bcrypt";
 import { generateAccessToken } from "../middleware/authentication/authentication.middleware";
 require('dotenv').config();
 
-const router = express.Router();
+export const userRouter = express.Router();
 
-router.post("/register", async (req, res) => {
+userRouter.post("/register", async (req, res) => {
 	if ((req.body.name as string).length > 70 || (req.body.email as string).length > 70) {
 		res.status(400).json({ message: "Character limit must be 70 or less" });
 	}
@@ -32,7 +32,7 @@ router.post("/register", async (req, res) => {
 	}
 });
 
-router.post("/login", async (req, res) => {
+userRouter.post("/login", async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
 	const entry = await userModel.findOne({

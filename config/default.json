@@ -1,0 +1,11 @@
+{
+	"server": {
+		"host": "localhost",
+		"port": 6061
+	},
+	"api": {
+		"useCors": true,
+		"basePath": "/api",
+		"connectionString": ""
+	}
+}

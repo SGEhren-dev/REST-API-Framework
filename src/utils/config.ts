@@ -7,12 +7,16 @@ export function readConfig(): IServerConfiguration {
 	const useCors = config.get("api.useCors") as boolean;
 	const basePath = config.get("api.basePath") as string;
 	const connectionString = config.get("api.connectionString") as string;
+	const tokenSecret = config.get("environment.tokenSecret") as string;
+	const passwordSalt = config.get("environment.passwordSalt") as string;
 
 	return {
 		host,
 		port,
 		useCors,
 		basePath,
-		connectionString
+		connectionString,
+		tokenSecret,
+		passwordSalt
 	};
 }

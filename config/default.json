@@ -6,6 +6,10 @@
 	"api": {
 		"useCors": true,
 		"basePath": "/api",
-		"connectionString": ""
+		"connectionString": "mongodb://localhost:8000"
+	},
+	"environment": {
+		"tokenSecret": "c76824cb3d6af05b31fc389fa62f73fa0870200de900aa4c4e5c3af48def98b92345060996e0d1c23caaf112ebfe7906b82fefb3197d888eaa2f924dbb9e3b2e3cd059f976c33cca2c87f93dc52f9a217a70f292b57618689c236e15daeed926090db58dfd2d20266cd223aa834fc37c3aea2142687aa9a21731ee20a9fac6a3",
+		"passwordSalt": "$2b$10$El6sj4MrX1dKgFJrPh8bSu"
 	}
 }

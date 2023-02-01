@@ -10,14 +10,15 @@
         "strict": true,
 		"baseUrl": ".",
 		"paths": {
-			"*": [ "./src/*" ],
+			"API/Objects": [ "./src/objects", "./src/objects/*" ],
 			"API/Routes": [ "./src/routes", "./src/routes/*" ],
 			"API/Models": [ "./src/models", "./src/models/*" ],
 			"API/Utils/*": [ "./src/utils/*" ],
 			"API/Middleware": [ "./src/middleware", "./src/middleware/*" ],
 			"API/Interfaces": [ "./src/interfaces", "./src/interfaces/*" ]
 		},
-		"strictPropertyInitialization": false
+		"strictPropertyInitialization": false,
+		"sourceMap": true
     },
 	"exclude": [
 		"node_modules"

@@ -1,12 +1,14 @@
 import * as jwt from "jsonwebtoken";
-require("dotenv").config();
+import { readConfig } from "API/Utils/config";
+
+const config = readConfig();
 
 export function generateAccessToken(username: string) {
-	return jwt.sign(username, process.env.TOKEN_SECRET as string);
+	return jwt.sign(username, config.tokenSecret);
 }
 
 export function authenticateToken(req: any, res: any, next: any) {
-	const bearerHeader = req.headers['authorization'];
+	const bearerHeader = req.headers["authorization"];
 	
 	if (bearerHeader) {
 		const bearer = bearerHeader.split(" ");
@@ -16,7 +18,7 @@ export function authenticateToken(req: any, res: any, next: any) {
 			res.status(401);
 		}
 	
-		jwt.verify(bearerToken, process.env.TOKEN_SECRET as string, (err: any, user: any) => {
+		jwt.verify(bearerToken, config.tokenSecret, (err: any, user: any) => {
 			if (err) {
 				return res.status(403);
 			}

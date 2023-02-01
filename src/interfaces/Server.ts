@@ -4,4 +4,6 @@ export interface IServerConfiguration {
 	useCors: boolean;
 	basePath: string;
 	connectionString: string;
+	tokenSecret: string;
+	passwordSalt: string;
 }

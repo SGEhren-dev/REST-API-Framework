@@ -7,7 +7,7 @@ import morgan from "morgan";
 import cors from "cors";
 
 import { connectToDatabase } from "API/Utils/database";
-import { IServerConfiguration } from "API/Interfaces";
+import { IIndexSignature, IServerConfiguration } from "API/Interfaces";
 import { readConfig } from "API/Utils/config";
 import { authenticateToken } from "API/Middleware";
 
@@ -32,21 +32,17 @@ export class API {
 	}
 
 	createRoute(
-		path: string | string[], method: RequestMethod[], useAuth: boolean,
-		callbacks: [(req: RequestType, res: ResponseType, next: NextFunction) => void]
+		path: string | string[], useAuth: boolean,
+		callbacks: IIndexSignature<(req: RequestType, res: ResponseType, next: NextFunction) => void>
 	) {
 		const router: Router = express.Router();
 
-		method.forEach((method: RequestMethod, index: number) => {
-			if (index > callbacks.length) {
-				throw new Error("[API] -> Create Route: Number of methods greater than number of callbacks.");
-			}
-
+		Object.keys(callbacks).forEach((method: string, index: number) => {
 			if (useAuth) {
-				router[ method ]?.(path, authenticateToken, callbacks[ index ])
+				router[ method as RequestMethod ]?.(path, authenticateToken, callbacks[ index ])
 			}
 
-			router[ method ]?.(path, callbacks[ index ]);
+			router[ method as RequestMethod ]?.(path, callbacks[ index ]);
 		});
 
 		this.registerRoute(router);

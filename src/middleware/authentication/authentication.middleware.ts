@@ -5,7 +5,9 @@ import { readConfig } from "API/Utils/config";
 const config = readConfig();
 
 export function generateAccessToken(username: string) {
-	return jwt.sign(username, config.tokenSecret);
+	return jwt.sign({ data: username }, config.tokenSecret, {
+		expiresIn: "7d"
+	});
 }
 
 export function authenticateToken(req: any, res: any, next: any) {
@@ -19,7 +21,7 @@ export function authenticateToken(req: any, res: any, next: any) {
 			res.status(401);
 		}
 
-		jwt.verify(bearerToken, config.tokenSecret, (err: any, user: any) => {
+		jwt.verify(bearerToken, config.tokenSecret, (err:any , user: any) => {
 			if (err) {
 				return res.status(403);
 			}

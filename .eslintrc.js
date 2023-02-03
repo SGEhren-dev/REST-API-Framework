@@ -103,6 +103,11 @@ module.exports = {
 			{
 				"max": 1
 			}
-		]
+		],
+		"eol-last": [
+			"error",
+			"always"
+		],
+		"no-trailing-spaces": "error",
 	},
 }

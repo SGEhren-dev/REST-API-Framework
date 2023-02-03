@@ -8,6 +8,7 @@ import { readConfig } from "API/Utils/config";
 export const userRouter = express.Router();
 const config = readConfig();
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 userRouter.post("/register", async (req, res) => {
 	if ((req.body.name as string).length > 70 || (req.body.email as string).length > 70) {
 		res.status(400).json({ message: "Character limit must be 70 or less" });
@@ -32,6 +33,7 @@ userRouter.post("/register", async (req, res) => {
 		res.status(400).json({ message: error.message });
 	}
 });
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 userRouter.post("/login", async (req, res) => {
 	const email = req.body.email;

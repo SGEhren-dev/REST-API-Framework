@@ -26,13 +26,10 @@ export class API {
 	}
 
 	createRoute(
-		path: string | string[], method: RequestMethod | RequestMethod[], useAuth: boolean, model: mongoose.Model<any, any, unknown, any, unknown>
+		path: string | string[], method: RequestMethod | RequestMethod[], useAuth: boolean,
+		model: mongoose.Model<any, any, unknown, any, unknown>
 	) {
 		const router: Router = express.Router();
-	}
-
-	createAsyncRoute() {
-
 	}
 
 	registerRoute(route: Router) {
@@ -59,6 +56,7 @@ export class API {
 		return this;
 	}
 
+	/* eslint-disable @typescript-eslint/no-explicit-any */
 	registerPlugin(plugin: RequestHandler<any, any, any, any, Record<string, any>>[]) {
 		logger.log("Registering custom app plugin...");
 		this.app.use(plugin);
@@ -87,4 +85,5 @@ export class API {
 				});
 		});
 	}
+	/* eslint-disable @typescript-eslint/no-explicit-any */
 }

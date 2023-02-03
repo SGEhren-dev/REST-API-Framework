@@ -1,15 +1,21 @@
-import express, { Express, RequestHandler, Router } from "express";
+import express, {
+	Express, Request, Response, RequestHandler, Router, NextFunction
+} from "express";
 import logger from "node-color-log";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import cors from "cors";
-import mongoose from "mongoose";
 
 import { connectToDatabase } from "API/Utils/database";
 import { IServerConfiguration } from "API/Interfaces";
 import { readConfig } from "API/Utils/config";
+import { authenticateToken } from "API/Middleware";
 
-type RequestMethod = "GET" | "POST" | "PATCH" | "DELETE";
+type RequestMethod = "get" | "post" | "patch" | "delete";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+type RequestType = Request<object, any, any, unknown, Record<string, any>>;
+type ResponseType = Response<any, Record<string, any>>;
+/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export class API {
 	app: Express;
@@ -26,10 +32,24 @@ export class API {
 	}
 
 	createRoute(
-		path: string | string[], method: RequestMethod | RequestMethod[], useAuth: boolean,
-		model: mongoose.Model<any, any, unknown, any, unknown>
+		path: string | string[], method: RequestMethod[], useAuth: boolean,
+		callbacks: [(req: RequestType, res: ResponseType, next: NextFunction) => void]
 	) {
 		const router: Router = express.Router();
+
+		method.forEach((method: RequestMethod, index: number) => {
+			if (index > callbacks.length) {
+				throw new Error("[API] -> Create Route: Number of methods greater than number of callbacks.");
+			}
+
+			if (useAuth) {
+				router[ method ]?.(path, authenticateToken, callbacks[ index ])
+			}
+
+			router[ method ]?.(path, callbacks[ index ]);
+		});
+
+		this.registerRoute(router);
 	}
 
 	registerRoute(route: Router) {
